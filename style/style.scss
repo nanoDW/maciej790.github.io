@@ -4,10 +4,9 @@
   box-sizing: border-box;
 }
 
-.top{
+.top {
   transform: translateY(-100vh);
 }
-
 
 body {
   background-color: cadetblue;
@@ -18,13 +17,14 @@ body {
   justify-content: center;
   align-items: center;
 
-  
-  .refresh{
+  .refresh {
+    position: absolute;
+    bottom: 50px;
     display: none;
     transition: transform 0.3s ease-in-out;
   }
 
-  .refresh:hover{
+  .refresh:hover {
     cursor: pointer;
     transform: rotate(360deg);
   }
@@ -90,6 +90,26 @@ body {
           transform: scale(1.2);
         }
       }
+    }
+  }
+
+  .secondView {
+    width: 50%;
+    position: absolute;
+    top: 100px;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    text-align: center;
+    font-size: 30px;
+
+    p {
+      margin-top: 30px;
+    }
+
+    h1 {
+    }
+
+    img {
     }
   }
 }

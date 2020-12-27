@@ -19,6 +19,8 @@ body {
 }
 
 body .refresh {
+  position: absolute;
+  bottom: 50px;
   display: none;
   transition: transform 0.3s ease-in-out;
 }
@@ -90,4 +92,18 @@ body .firstView section form button {
 body .firstView section form button:hover {
   cursor: pointer;
   transform: scale(1.2);
+}
+
+body .secondView {
+  width: 50%;
+  position: absolute;
+  top: 100px;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  text-align: center;
+  font-size: 30px;
+}
+
+body .secondView p {
+  margin-top: 30px;
 }
