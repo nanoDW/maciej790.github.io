@@ -7,50 +7,60 @@ const refreshButton = document.querySelector(".refresh");
 
 //total results
 const weather = [];
+let results;
 
-button.addEventListener("click", (e) => {
+const searchResult = (e) => {
   e.preventDefault();
 
-  input.value ? loadResult(input.value) : alert("First You mast type a value!");
+  input.value
+    ? fetchResult(input.value)
+    : alert("First You mast type a value!");
 
   input.value = "";
-});
+};
 
-const loadResult = async (valueFromInput) => {
+const fetchResult = async (valueFromInput) => {
   const URL = `https://api.openweathermap.org/data/2.5/weather?q=${valueFromInput}&appid=962e96c7edd5b917153804d1e003d0ff&units=metric`;
 
   //fetch my data from api
   const response = await fetch(URL);
-  const status = await response.status;
+  const status = response.status;
   const data = await response.json();
 
-  if (status == 200) {
-    const item = {
-      temp: data.main.temp,
-      humidity: data.main.humidity,
-      description: data.weather[0].main,
-      img: data.weather[0].icon,
-    };
+  results = data;
 
-    homeView.classList.toggle("top");
-    refreshButton.style.display = "block";
-
-    weather.push(item);
-    displayData(weather);
-  } else {
-    alert("Sorry we have a problem :(");
-  }
+  saveData(results);
 };
 
-const displayData = (weather) => {
+const saveData = (results) => {
+  const item = {
+    temp: results.main.temp,
+    humidity: results.main.humidity,
+    description: results.weather[0].main,
+    img: results.weather[0].icon,
+  };
+
+  weather.push(item);
+
+  changePositionForm();
+};
+
+const changePositionForm = () => {
+  homeView.classList.toggle("top");
+  refreshButton.style.display = "block";
+
+  displayData();
+};
+
+const displayData = () => {
   resultView.style.opacity = 1;
 
   const imgCode = weather[0].img;
 
-  const h1_temp = document.createElement("h1");
-  const p_humidity = document.createElement("p");
+  const h1Temp = document.createElement("h1");
+  const pHumidity = document.createElement("p");
   const img = document.createElement("img");
-  const p_description = document.createElement("p");
+  const pDescription = document.createElement("p");
 
   img.src = `http://openweathermap.org/img/wn/${imgCode}.png`;
   img.style.width = "200px";
@@ -59,16 +69,15 @@ const displayData = (weather) => {
   const degree = "&#8451;";
   const procent = "%";
 
-  h1_temp.innerHTML = weather[0].temp + degree;
-  p_humidity.innerHTML = weather[0].humidity + procent;
-  p_description.innerHTML = weather[0].description;
+  h1Temp.innerHTML = weather[0].temp + degree;
+  pHumidity.innerHTML = weather[0].humidity + procent;
+  pDescription.innerHTML = weather[0].description;
 
-  resultView.appendChild(h1_temp);
-  resultView.appendChild(p_humidity);
-  resultView.appendChild(img);
-  resultView.appendChild(p_description);
+  resultView.append(h1Temp, pHumidity, img, pDescription);
 };
 
 refreshButton.addEventListener("click", () => {
   location.reload();
 });
+
+button.addEventListener("click", searchResult);
