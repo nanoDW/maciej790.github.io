@@ -8,24 +8,33 @@
   transform: translateY(-100vh);
 }
 
+.show {
+  opacity: 1;
+}
+
+.display {
+  opacity: 1;
+}
+
 body {
   background-color: cadetblue;
   font-family: "Roboto", sans-serif;
   color: white;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-body .refresh {
+body i {
   position: absolute;
   bottom: 50px;
-  display: none;
+  opacity: 0;
   transition: transform 0.3s ease-in-out;
 }
 
-body .refresh:hover {
+body i:hover {
   cursor: pointer;
   transform: rotate(360deg);
 }
@@ -39,6 +48,18 @@ body .firstView {
   transition: transform 0.5s ease-in-out;
 }
 
+@media (max-width: 710px) {
+  body .firstView {
+    width: 90%;
+  }
+}
+
+@media (max-width: 710px) {
+  body .firstView h1 {
+    text-align: center;
+  }
+}
+
 body .firstView header {
   margin-top: 50px;
   text-align: justify;
@@ -49,21 +70,18 @@ body .firstView header b {
   margin-top: 20px;
 }
 
-body .firstView section {
-  width: 100%;
-  margin-top: 100px;
-  text-align: center;
-}
-
-body .firstView section form {
+body .firstView form {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
   height: 200px;
+  width: 100%;
+  margin-top: 100px;
+  text-align: center;
 }
 
-body .firstView section form input {
+body .firstView form input {
   width: 50%;
   height: 40px;
   border: none;
@@ -75,11 +93,11 @@ body .firstView section form input {
   background-color: transparent;
 }
 
-body .firstView section form ::placeholder {
+body .firstView form ::placeholder {
   color: white;
 }
 
-body .firstView section form button {
+body .firstView form button {
   width: 20%;
   height: 40px;
   border: none;
@@ -89,12 +107,21 @@ body .firstView section form button {
   transition: transform 0.3s ease-in-out;
 }
 
-body .firstView section form button:hover {
+body .firstView form button:hover {
   cursor: pointer;
   transform: scale(1.2);
 }
 
-body .secondView {
+@media (max-width: 710px) {
+  body .firstView form input {
+    width: 100%;
+  }
+  body .firstView form button {
+    width: 50%;
+  }
+}
+
+body section {
   width: 50%;
   position: absolute;
   top: 100px;
@@ -104,6 +131,10 @@ body .secondView {
   font-size: 30px;
 }
 
-body .secondView p {
+body section p {
   margin-top: 30px;
+}
+
+body section img {
+  width: 200px;
 }

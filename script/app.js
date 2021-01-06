@@ -1,83 +1,74 @@
-//variables
-const button = document.querySelector("button");
-const input = document.querySelector("input");
-const homeView = document.querySelector(".firstView");
-const resultView = document.querySelector(".secondView");
-const refreshButton = document.querySelector(".refresh");
+//HTML variables
+const inputValue = document.querySelector("input");
+const searchBtn = document.querySelector(".search");
+const firstViewElement = document.querySelector(".firstView");
+const secondViewElement = document.querySelector("section");
+const refreshBtn = document.querySelector("i");
 
-//total results
+//all weather data
 const weather = [];
-let results;
 
-const searchResult = (e) => {
+const handleClickSearch = (e) => {
   e.preventDefault();
 
-  input.value
-    ? fetchResult(input.value)
-    : alert("First You mast type a value!");
-
-  input.value = "";
+  inputValue.value ? getDataApi() : alert("First You must type a value !");
 };
 
-const fetchResult = async (valueFromInput) => {
-  const URL = `https://api.openweathermap.org/data/2.5/weather?q=${valueFromInput}&appid=962e96c7edd5b917153804d1e003d0ff&units=metric`;
+const getDataApi = async () => {
+  const URL = `https://api.openweathermap.org/data/2.5/weather?q=${inputValue.value}&appid=962e96c7edd5b917153804d1e003d0ff&units=metric`;
 
-  //fetch my data from api
   const response = await fetch(URL);
-  const status = response.status;
   const data = await response.json();
+  const status = response.status;
 
-  results = data;
-
-  saveData(results);
+  status != 404 ? createWeatherObj(data) : alert("Ohh, we have error :(");
 };
 
-const saveData = (results) => {
+const createWeatherObj = (data) => {
+  //descrutcuring api object
+  const { temp, humidity } = data.main;
+
+  const { icon, description } = data.weather[0];
+
   const item = {
-    temp: results.main.temp,
-    humidity: results.main.humidity,
-    description: results.weather[0].main,
-    img: results.weather[0].icon,
+    temp: Math.round(temp),
+    humidity,
+    icon,
+    description,
   };
 
   weather.push(item);
 
-  changePositionForm();
+  showSection();
+  createElement(item);
 };
 
-const changePositionForm = () => {
-  homeView.classList.toggle("top");
-  refreshButton.style.display = "block";
+const createElement = (item) => {
+  const { temp, humidity, description, icon } = item;
 
-  displayData();
+  const tempEl = document.createElement("p");
+  const humidityEl = document.createElement("p");
+  const descriptionEl = document.createElement("p");
+  const imageEl = document.createElement("img");
+
+  tempEl.innerHTML = `${temp}&#176;C`;
+  humidityEl.innerHTML = `${humidity}%`;
+  descriptionEl.innerHTML = description;
+
+  const imageURL = `http://openweathermap.org/img/wn/${icon}.png`;
+
+  imageEl.src = imageURL;
+
+  secondViewElement.append(tempEl, humidityEl, imageEl, descriptionEl);
 };
 
-const displayData = () => {
-  resultView.style.opacity = 1;
-
-  const imgCode = weather[0].img;
-
-  const h1Temp = document.createElement("h1");
-  const pHumidity = document.createElement("p");
-  const img = document.createElement("img");
-  const pDescription = document.createElement("p");
-
-  img.src = `http://openweathermap.org/img/wn/${imgCode}.png`;
-  img.style.width = "200px";
-  img.style.height = "200px";
-
-  const degree = "&#8451;";
-  const procent = "%";
-
-  h1Temp.innerHTML = weather[0].temp + degree;
-  pHumidity.innerHTML = weather[0].humidity + procent;
-  pDescription.innerHTML = weather[0].description;
-
-  resultView.append(h1Temp, pHumidity, img, pDescription);
+const showSection = () => {
+  firstViewElement.classList.toggle("top");
+  secondViewElement.classList.toggle("display");
+  refreshBtn.classList.toggle("show");
 };
 
-refreshButton.addEventListener("click", () => {
-  location.reload();
-});
+const refreshPage = () => location.reload();
 
-button.addEventListener("click", searchResult);
+searchBtn.addEventListener("click", handleClickSearch);
+refreshBtn.addEventListener("click", refreshPage);

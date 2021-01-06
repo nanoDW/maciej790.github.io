@@ -8,23 +8,32 @@
   transform: translateY(-100vh);
 }
 
+.show {
+  opacity: 1;
+}
+
+.display {
+  opacity: 1;
+}
+
 body {
   background-color: cadetblue;
   font-family: "Roboto", sans-serif;
   color: white;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
-  .refresh {
+  i {
     position: absolute;
     bottom: 50px;
-    display: none;
+    opacity: 0;
     transition: transform 0.3s ease-in-out;
   }
 
-  .refresh:hover {
+  i:hover {
     cursor: pointer;
     transform: rotate(360deg);
   }
@@ -37,6 +46,16 @@ body {
     align-items: center;
     transition: transform 0.5s ease-in-out;
 
+    @media (max-width: 710px) {
+      width: 90%;
+    }
+
+    h1 {
+      @media (max-width: 710px) {
+        text-align: center;
+      }
+    }
+
     header {
       margin-top: 50px;
       text-align: justify;
@@ -47,53 +66,59 @@ body {
       }
     }
 
-    section {
+    form {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      height: 200px;
       width: 100%;
       margin-top: 100px;
       text-align: center;
 
-      form {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        align-items: center;
-        height: 200px;
+      input {
+        width: 50%;
+        height: 40px;
+        border: none;
+        border-radius: 100px;
+        border: 2px solid white;
+        text-align: center;
+        color: white;
+        outline: none;
+        background-color: transparent;
+      }
 
+      ::placeholder {
+        color: white;
+      }
+
+      button {
+        width: 20%;
+        height: 40px;
+        border: none;
+        outline: none;
+        border-radius: 100px;
+        background-color: white;
+        transition: transform 0.3s ease-in-out;
+      }
+
+      button:hover {
+        cursor: pointer;
+        transform: scale(1.2);
+      }
+
+      @media (max-width: 710px) {
         input {
-          width: 50%;
-          height: 40px;
-          border: none;
-          border-radius: 100px;
-          border: 2px solid white;
-          text-align: center;
-          color: white;
-          outline: none;
-          background-color: transparent;
+          width: 100%;
         }
-
-        ::placeholder {
-          color: white;
-        }
-
         button {
-          width: 20%;
-          height: 40px;
-          border: none;
-          outline: none;
-          border-radius: 100px;
-          background-color: white;
-          transition: transform 0.3s ease-in-out;
-        }
-
-        button:hover {
-          cursor: pointer;
-          transform: scale(1.2);
+          width: 50%;
         }
       }
     }
   }
 
-  .secondView {
+  section {
     width: 50%;
     position: absolute;
     top: 100px;
@@ -106,10 +131,8 @@ body {
       margin-top: 30px;
     }
 
-    h1 {
-    }
-
     img {
+      width: 200px;
     }
   }
 }
