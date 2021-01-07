@@ -27,7 +27,7 @@ const getDataFromApi = async (url) => {
   }
 };
 
-const createWeatherItem = async (weatherData) => {
+const createWeatherItem = (weatherData) => {
   const { temp, humidity } = weatherData.main;
   const { description, icon } = weatherData.weather[0];
 
